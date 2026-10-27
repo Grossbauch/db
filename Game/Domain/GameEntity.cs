@@ -92,9 +92,15 @@ namespace Game.Domain
                     winnerId = player.UserId;
                 }
             }
-            //TODO Заполнить все внутри GameTurnEntity, в том числе winnerId
-            var result = new GameTurnEntity();
-            // Это должно быть после создания GameTurnEntity
+
+            var first = Players[0];
+            var second = Players[1];
+            var result = new GameTurnEntity(
+                Guid.Empty, Id, CurrentTurnIndex,
+                first.UserId, first.Name, first.Decision.Value,
+                second.UserId, second.Name, second.Decision.Value,
+                winnerId == Guid.Empty ? (Guid?)null : winnerId);
+
             foreach (var player in Players)
                 player.Decision = null;
             CurrentTurnIndex++;
